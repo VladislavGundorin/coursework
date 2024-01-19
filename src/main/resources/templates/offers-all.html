@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"/>
+<body class="d-flex flex-column h-100">
+<div th:replace="~{fragments/navbar}">Navbar</div>
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h2 class="text-center text-dark mt-5">Список всех предложений</h2>
+                <div class="row mb-3">
+                    <div th:each="offer, iterStat : ${offers}" class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <img th:src="${offer.imageUrl}" alt="Offer Image" class="card-img-top img-fluid img-thumbnail">
+                            <div class="card-body">
+                                <p class="card-text" th:text="${'Engine: ' + offer.engine}"></p>
+                                <p class="card-text" th:text="${'Mileage: ' + offer.mileage}"></p>
+                                <p class="card-text" th:text="${'Price: ' + offer.price}"></p>
+                                <p class="card-text" th:text="${'Transmission: ' + offer.transmission}"></p>
+                                <p class="card-text" th:text="${'Year: ' + offer.year}"></p>
+                                <p class="card-text" th:text="${'Seller: ' + offer.seller.firstName + ' ' + offer.seller.lastName}"></p>
+                                <p class="card-text" th:text="${'Model: ' + offer.model.name + ', Brand: ' + offer.model.brand.name}"></p>
+                                <a th:href="@{/offers/details/{offer-id}(offer-id=${offer.id})}" class="btn btn-primary">Подробная информация</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="~{fragments/footer}"/>
+</body>
+</html>

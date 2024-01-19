@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .side-panel {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 200px;
+            background-color: #f8f9fa;
+            overflow-x: hidden;
+            padding-top: 20px;
+            z-index: 1;
+        }
+
+        .side-panel a {
+            padding: 8px 8px 8px 16px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #000;
+            display: block;
+        }
+
+        .side-panel a:hover {
+            color: #007bff;
+        }
+
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
+
+        .top-buttons {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+            display: flex;
+        }
+
+        .top-buttons a,
+        .top-buttons form input {
+            display: inline-block;
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #555;
+            text-align: center;
+            text-decoration: none;
+            background-color: #eee;
+            border-radius: 10px;
+            margin-right: 10px;
+        }
+
+        .top-buttons a:hover,
+        .top-buttons form input:hover {
+            background-color: #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="side-panel">
+    <a href="/">Главная</a>
+    <a href="/offers/alloffers">Список всех предложений</a>
+    <a href="/brands/allbrands">Список доступных брендов</a>
+    <a href="/models/allmodels">Модели автомобилей</a>
+    <a href="/brands/create">Добавить бренд</a>
+    <a href="/models/create">Добавить модель</a>
+    <a href="/offers/create">Добавить предложение</a>
+    <a href="/users/allusers">Список всех пользователей</a>
+    <a href="/users/profile" sec:authorize="isAuthenticated()">Личный кабинет</a>
+</div>
+
+<div class="top-buttons">
+    <a class="nav-item nav-link text-dark" th:href="@{/users/register}">Register</a>
+    <a class="nav-item nav-link text-dark" th:href="@{/users/login}">Login</a>
+    <form th:method="post" th:action="@{/users/logout}">
+        <input class="btn btn-link nav-link" type="submit" value="Logout">
+    </form>
+</div>
+
+<div class="main-content">
+
+</div>
+
+</body>
+</html>
