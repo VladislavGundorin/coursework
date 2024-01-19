@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> findByUsername(String username);
 
-//    List<User> findByFirstNameAndLastName(String firstName, String lastName);
+    List<User> findByFirstNameAndLastName(String firstName, String lastName);
 
 
 }

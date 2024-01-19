@@ -1,9 +1,13 @@
 package com.example.coursework.service.impl;
 
+import com.example.coursework.dto.BrandDTO;
+import com.example.coursework.dto.ModelDTO;
 import com.example.coursework.dto.OfferDTO;
+import com.example.coursework.dto.UserDTO;
 import com.example.coursework.model.Brand;
 import com.example.coursework.model.Model;
 import com.example.coursework.model.Offer;
+import com.example.coursework.model.User;
 import com.example.coursework.repositorie.BrandRepository;
 import com.example.coursework.repositorie.ModelRepository;
 import com.example.coursework.repositorie.OfferRepository;
@@ -11,8 +15,10 @@ import com.example.coursework.repositorie.UserRepository;
 import com.example.coursework.service.OfferService;
 import com.example.coursework.validation.ValidationUtil;
 import com.example.coursework.views.OfferViewModel;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,9 +47,49 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
+    @Transactional
+    @CacheEvict(value = "offerCache", allEntries = true)
     public OfferDTO createOffer(OfferDTO offerDTO) {
+        UserDTO sellerDTO = offerDTO.getSeller();
+        List<User> existingSellers = userRepository.findByFirstNameAndLastName(sellerDTO.getFirstName(), sellerDTO.getLastName());
+        User seller;
+        if (existingSellers.isEmpty()) {
+            seller = modelMapper.map(sellerDTO, User.class);
+            seller = userRepository.save(seller);
+        } else {
+            seller = existingSellers.get(0);
+        }
+
+        BrandDTO brandDTO = offerDTO.getModel().getBrand();
+        Brand brand;
+        List<Brand> existingBrands = brandRepository.findByName(brandDTO.getName());
+        if (!existingBrands.isEmpty()) {
+            brand = existingBrands.get(0);
+        } else {
+            brand = brandRepository.save(modelMapper.map(brandDTO, Brand.class));
+        }
+
+        ModelDTO modelDTO = offerDTO.getModel();
+        String modelName = modelDTO.getName();
+
+        // Проверяем наличие модели по имени и бренду
+        List<Model> existingModels = modelRepository.findByBrandNameAndModelName(brandDTO.getName(), modelName);
+        Model model;
+        if (existingModels.isEmpty()) {
+            model = modelMapper.map(modelDTO, Model.class);
+            model.setBrand(brand);
+            model = modelRepository.save(model);
+        } else {
+            model = existingModels.get(0);
+        }
+
         Offer offer = modelMapper.map(offerDTO, Offer.class);
-        return modelMapper.map(offerRepository.save(offer),OfferDTO.class);
+        offer.setModel(model);
+        offer.setSeller(seller);
+
+        Offer savedOffer = offerRepository.save(offer);
+
+        return modelMapper.map(savedOffer, OfferDTO.class);
     }
 
     @Override

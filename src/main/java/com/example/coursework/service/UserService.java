@@ -28,7 +28,7 @@ public interface UserService {
 //    UserDTO updateUser(UUID id, UserDTO userDTO);
 
 
-//    List<User> getByFirstNameAndLastName(String firstName, String lastName);
+    List<User> getByFirstNameAndLastName(String firstName, String lastName);
 
 
 
