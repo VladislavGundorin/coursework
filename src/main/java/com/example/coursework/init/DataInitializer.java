@@ -8,9 +8,12 @@ import com.example.coursework.enums.Transmission;
 import com.example.coursework.model.*;
 import com.example.coursework.repositorie.*;
 import com.example.coursework.service.*;
+import com.example.coursework.service.impl.AuthService;
+import com.example.coursework.views.UserRegistrationViewModel;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -28,9 +31,11 @@ public class DataInitializer implements CommandLineRunner {
     private final OfferService offerService;
     private final ModelService modelService;
     private final BrandService brandService;
+    private final AuthService authService;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public DataInitializer(UserRepository userRepository, UserRoleRepository userRoleRepository, OfferRepository offerRepository, ModelRepository modelRepository, BrandRepository brandRepository, UserService userService, UserRoleService userRoleService, OfferService offerService, ModelService modelService, BrandService brandService) {
+    public DataInitializer(UserRepository userRepository, UserRoleRepository userRoleRepository, OfferRepository offerRepository, ModelRepository modelRepository, BrandRepository brandRepository, UserService userService, UserRoleService userRoleService, OfferService offerService, ModelService modelService, BrandService brandService, AuthService authService, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.userRoleRepository = userRoleRepository;
         this.offerRepository = offerRepository;
@@ -41,6 +46,8 @@ public class DataInitializer implements CommandLineRunner {
         this.offerService = offerService;
         this.modelService = modelService;
         this.brandService = brandService;
+        this.authService = authService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -54,6 +61,34 @@ public class DataInitializer implements CommandLineRunner {
 
         Faker faker = new Faker();
         Random random = new Random();
+
+        UserDTO adminDTO = new UserDTO();
+        adminDTO.setUsername("admin");
+        adminDTO.setPassword("admin");
+        adminDTO.setFirstName("Admin");
+        adminDTO.setLastName("Admin");
+        adminDTO.setActive(true);
+        adminDTO.setImageUrl("/path/to/admin/image");
+        adminDTO.setRole(userRoleDTOS.get(1));
+
+        User admin = new User();
+        admin.setUsername(adminDTO.getUsername());
+        admin.setPassword(passwordEncoder.encode(adminDTO.getPassword()));
+        admin.setFirstName(adminDTO.getFirstName());
+        admin.setLastName(adminDTO.getLastName());
+        admin.setActive(adminDTO.isActive());
+        admin.setImageUrl(adminDTO.getImageUrl());
+        admin.setRole(userRoleRepository.findById(adminDTO.getRole().getId()).orElseThrow());
+
+        userRepository.save(admin);
+
+//        UserRegistrationViewModel adminUser = new UserRegistrationViewModel();
+//        adminUser.setUsername("admin");
+//        adminUser.setPassword("admin");
+//        adminUser.setFirstName("Admin");
+//        adminUser.setLastName("User");
+//
+//        authService.registerUser(adminUser);
 
         for (int i = 0; i < 100; i++) {
             UserDTO userDTO = new UserDTO();

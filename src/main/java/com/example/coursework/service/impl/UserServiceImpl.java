@@ -11,8 +11,10 @@ import com.example.coursework.repositorie.UserRoleRepository;
 import com.example.coursework.service.UserRoleService;
 import com.example.coursework.service.UserService;
 import com.example.coursework.validation.ValidationUtil;
+import com.example.coursework.views.OfferViewModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -88,6 +90,12 @@ public class UserServiceImpl implements UserService {
     public List<User> getByFirstNameAndLastName(String firstName, String lastName) {
         return userRepository.findByFirstNameAndLastName(firstName, lastName);
     }
+//    @Override
+//    public boolean isUserAdmin(String username) {
+//        User user = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
+//        return user.getRole().getRole() == Role.ADMIN;
+//    }
 }
 
 

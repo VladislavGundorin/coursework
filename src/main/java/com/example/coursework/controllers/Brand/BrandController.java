@@ -3,6 +3,7 @@ package com.example.coursework.controllers.Brand;
 
 import com.example.coursework.dto.BrandDTO;
 import com.example.coursework.service.BrandService;
+import com.example.coursework.service.UserService;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,17 +21,22 @@ import java.util.UUID;
 public class BrandController {
     private static final Logger LOG = LogManager.getLogger(Controller.class);
     private final BrandService brandService;
+    private final UserService userService;
 
     @Autowired
-    public BrandController(BrandService brandService){
+    public BrandController(BrandService brandService, UserService userService){
         this.brandService = brandService;
+        this.userService = userService;
     }
 
     @GetMapping("/allbrands")
-    public String getAllBrands(Model model){
+    public String getAllBrands(Model model, Principal principal){
         LOG.log(Level.INFO, "Entering method: getAllBrands");
         List<BrandDTO> brandDTOs = brandService.getAllBrands();
         model.addAttribute("brands", brandDTOs);
+//        String username = principal.getName();
+//        boolean isAdmin = userService.isUserAdmin(username);
+//        model.addAttribute("isAdmin", isAdmin);
         return "brands-all";
     }
 

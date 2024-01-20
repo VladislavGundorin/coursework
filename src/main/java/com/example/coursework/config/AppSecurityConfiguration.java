@@ -1,4 +1,5 @@
 package com.example.coursework.config;
+import com.example.coursework.enums.Role;
 import com.example.coursework.repositorie.UserRepository;
 import com.example.coursework.service.AppUserDetailsService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
@@ -30,13 +31,11 @@ public class AppSecurityConfiguration {
                 .authorizeHttpRequests(
                         authorizeHttpRequests ->
                                 authorizeHttpRequests.
-                                        requestMatchers(PathRequest.toStaticResources().atCommonLocations())
-                                        .permitAll().
-                                        requestMatchers("/", "/users/login", "/users/register", "/users/login-error","/offers/alloffers","/models/allmodels")
-                                        .permitAll().
-//                                        requestMatchers("/users/profile").authenticated().
-//                                        requestMatchers("/employees/add", "/employees/employee-delete/").hasRole(Role.USER.name()).
-//                                        requestMatchers("/companies/add","/companies/company-delete/","/employees/add", "/employees/employee-delete/").hasRole(UserRoles.ADMIN.name()).
+                                        requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
+                                        requestMatchers("/","/users/login","/users/register","/offers/alloffers","/offers/details/**").permitAll().
+                                        requestMatchers("/users/profile").authenticated().
+                                        requestMatchers("/", "/users/login","/offers/alloffers","/offers/create","/users/profile","/offers/details").hasRole(Role.USER.name()).
+                                        requestMatchers("/**").hasRole(Role.ADMIN.name()).
                                         anyRequest().authenticated()
                 )
                 .formLogin(

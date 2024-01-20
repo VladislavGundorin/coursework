@@ -23,7 +23,9 @@ public interface UserService {
 
     User getUserByUsername(String username);
 
-        List<Offer> allUserOffers(String username);
+    List<Offer> allUserOffers(String username);
+
+//    boolean isUserAdmin(String username);
 
 //    UserDTO updateUser(UUID id, UserDTO userDTO);
 
