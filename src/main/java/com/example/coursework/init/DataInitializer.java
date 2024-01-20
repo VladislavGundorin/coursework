@@ -98,6 +98,7 @@ public class DataInitializer implements CommandLineRunner {
             userDTO.setLastName(faker.name().lastName());
             userDTO.setActive(random.nextBoolean());
             userDTO.setImageUrl(faker.internet().image());
+            userDTO.setPhone_number(faker.phoneNumber().phoneNumber());
             userDTO.setRole(userRoleDTOS.get(random.nextInt(2)));
 
             User user = new User();
@@ -107,6 +108,7 @@ public class DataInitializer implements CommandLineRunner {
             user.setLastName(userDTO.getLastName());
             user.setActive(userDTO.isActive());
             user.setImageUrl(userDTO.getImageUrl());
+            user.setPhone_number(userDTO.getPhone_number());
             user.setRole(userRoleRepository.findById(userDTO.getRole().getId()).orElseThrow());
 
             userRepository.save(user);

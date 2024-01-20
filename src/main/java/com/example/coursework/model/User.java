@@ -14,6 +14,7 @@ public class User extends BaseEntity {
     private String lastName;
     private boolean isActive;
     private String imageUrl;
+    private String phone_number;
 
 
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -27,13 +28,14 @@ public class User extends BaseEntity {
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, UserRole role) {
+    public User(String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, String phone_number, UserRole role) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.isActive = isActive;
         this.imageUrl = imageUrl;
+        this.phone_number = phone_number;
         this.role = role;
     }
 
@@ -101,6 +103,14 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -110,6 +120,7 @@ public class User extends BaseEntity {
                 ", lastName='" + lastName + '\'' +
                 ", isActive=" + isActive +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", phone_number='" + phone_number + '\'' +
                 ", offers=" + offers +
                 ", role=" + role +
                 ", id=" + id +

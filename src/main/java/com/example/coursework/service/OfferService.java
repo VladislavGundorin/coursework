@@ -1,6 +1,7 @@
 package com.example.coursework.service;
 
 import com.example.coursework.dto.OfferDTO;
+import com.example.coursework.views.AllOfferUserModelBrandAdd;
 import com.example.coursework.views.OfferViewModel;
 
 import java.util.List;
@@ -22,6 +23,8 @@ public interface OfferService {
     void incrementViewCount(UUID offerId);
 
     List<OfferViewModel> getOfferDataForUserView();
+
+
 
 //    OfferDTO updateOfferByID(UUID id,OfferDTO offerDTO);
 

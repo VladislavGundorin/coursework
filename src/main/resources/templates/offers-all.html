@@ -21,6 +21,7 @@
                                 <p class="card-text" th:text="${'Year: ' + offer.year}"></p>
                                 <p class="card-text" th:text="${'Seller: ' + offer.seller.firstName + ' ' + offer.seller.lastName}"></p>
                                 <p class="card-text" th:text="${'Model: ' + offer.model.name + ', Brand: ' + offer.model.brand.name}"></p>
+                                <p class="card-text" th:text="${'phone_number: ' + offer.seller.phone_number}"></p>
                                 <a th:href="@{/offers/details/{offer-id}(offer-id=${offer.id})}" class="btn btn-primary">Подробная информация</a>
                             </div>
                         </div>

@@ -14,6 +14,7 @@ public class UserDTO {
     private String lastName;
     private boolean isActive;
     private String imageUrl;
+    private String phone_number;
     private UserRoleDTO role;
 
     private String email;
@@ -23,7 +24,7 @@ public class UserDTO {
         this.lastName = "DefaultLastName";
     }
 
-    public UserDTO(UUID id, String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, UserRoleDTO role, String email) {
+    public UserDTO(UUID id, String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, UserRoleDTO role, String email, String phone_number) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -33,6 +34,7 @@ public class UserDTO {
         this.imageUrl = imageUrl;
         this.role = role;
         this.email = email;
+        this.phone_number = phone_number;
     }
 
     public UUID getId() {
@@ -107,6 +109,14 @@ public class UserDTO {
         this.email = email;
     }
 
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
     @Override
     public String toString() {
         return "UserDTO{" +
@@ -117,6 +127,7 @@ public class UserDTO {
                 ", lastName='" + lastName + '\'' +
                 ", isActive=" + isActive +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", phone_number='" + phone_number + '\'' +
                 ", role=" + role +
                 ", email='" + email + '\'' +
                 '}';

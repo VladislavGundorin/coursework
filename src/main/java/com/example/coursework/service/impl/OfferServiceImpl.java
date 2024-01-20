@@ -19,6 +19,9 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -46,50 +49,56 @@ public class OfferServiceImpl implements OfferService {
         this.userRepository = userRepository;
     }
 
+//    @Override
+//    @Transactional
+//    @CacheEvict(value = "offerCache", allEntries = true)
+//    public OfferDTO createOffer(OfferDTO offerDTO) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        String username = authentication.getName();
+//        User user = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
+//
+//
+//        BrandDTO brandDTO = offerDTO.getModel().getBrand();
+//        Brand brand;
+//        List<Brand> existingBrands = brandRepository.findByName(brandDTO.getName());
+//        //map DTO
+//        if (!existingBrands.isEmpty()) {
+//            brand = existingBrands.get(0);
+//        } else {
+//            brand = brandRepository.save(modelMapper.map(brandDTO, Brand.class));
+//        }
+//
+//        ModelDTO modelDTO = offerDTO.getModel();
+//        String modelName = modelDTO.getName();
+//
+//        List<Model> existingModels = modelRepository.findByBrandNameAndModelName(brandDTO.getName(), modelName);
+//        Model model;
+//        if (existingModels.isEmpty()) {
+//            model = modelMapper.map(modelDTO, Model.class);
+//            model.setBrand(brand);
+//            model = modelRepository.save(model);
+//        } else {
+//            model = existingModels.get(0);
+//        }
+//
+//        Offer offer = modelMapper.map(offerDTO, Offer.class);
+//        offer.setModel(model);
+//
+//
+//        offer.setSeller(user);
+//
+//        Offer savedOffer = offerRepository.save(offer);
+//
+//        return modelMapper.map(savedOffer, OfferDTO.class);
+//    }
+
+
     @Override
-    @Transactional
-    @CacheEvict(value = "offerCache", allEntries = true)
     public OfferDTO createOffer(OfferDTO offerDTO) {
-        UserDTO sellerDTO = offerDTO.getSeller();
-        List<User> existingSellers = userRepository.findByFirstNameAndLastName(sellerDTO.getFirstName(), sellerDTO.getLastName());
-        User seller;
-        if (existingSellers.isEmpty()) {
-            seller = modelMapper.map(sellerDTO, User.class);
-            seller = userRepository.save(seller);
-        } else {
-            seller = existingSellers.get(0);
-        }
-
-        BrandDTO brandDTO = offerDTO.getModel().getBrand();
-        Brand brand;
-        List<Brand> existingBrands = brandRepository.findByName(brandDTO.getName());
-        if (!existingBrands.isEmpty()) {
-            brand = existingBrands.get(0);
-        } else {
-            brand = brandRepository.save(modelMapper.map(brandDTO, Brand.class));
-        }
-
-        ModelDTO modelDTO = offerDTO.getModel();
-        String modelName = modelDTO.getName();
-
-        // Проверяем наличие модели по имени и бренду
-        List<Model> existingModels = modelRepository.findByBrandNameAndModelName(brandDTO.getName(), modelName);
-        Model model;
-        if (existingModels.isEmpty()) {
-            model = modelMapper.map(modelDTO, Model.class);
-            model.setBrand(brand);
-            model = modelRepository.save(model);
-        } else {
-            model = existingModels.get(0);
-        }
-
-        Offer offer = modelMapper.map(offerDTO, Offer.class);
-        offer.setModel(model);
-        offer.setSeller(seller);
-
-        Offer savedOffer = offerRepository.save(offer);
-
-        return modelMapper.map(savedOffer, OfferDTO.class);
+         Offer offer = modelMapper.map(offerDTO, Offer.class);
+        return modelMapper.map(offerRepository.save(offer),OfferDTO.class);
     }
 
     @Override
@@ -152,4 +161,5 @@ public class OfferServiceImpl implements OfferService {
         }
         return offerViewModels;
     }
+
 }
