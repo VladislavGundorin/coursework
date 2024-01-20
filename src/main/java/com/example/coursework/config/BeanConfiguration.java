@@ -19,5 +19,9 @@ public class BeanConfiguration {
                 .buildDefaultValidatorFactory()
                 .getValidator();
     }
+//    @Bean
+//    public UniqueUsernameValidator uniqueUsernameValidator(UserRepository userRepository) {
+//        return new UniqueUsernameValidator(userRepository);
+//    }
 
 }

@@ -18,10 +18,11 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
 //    List<User> findUserById(UUID id);
 
-    Optional<User> findByUsername(String username);
+    Optional<User> findUserByUsername(String username);
 
     List<User> findByFirstNameAndLastName(String firstName, String lastName);
 
+    boolean existsByUsername(String username);
 
 }
 

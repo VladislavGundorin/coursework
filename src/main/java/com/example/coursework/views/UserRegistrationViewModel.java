@@ -25,6 +25,7 @@ public class UserRegistrationViewModel {
     public void setUsername(String username) {
         this.username = username;
     }
+
     @NotEmpty(message = "Full name cannot be null or empty!")
     @Size(min = 5, max = 20)
     public String getFirstName() {

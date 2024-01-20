@@ -125,7 +125,8 @@ public class UserController {
                 username,
                 user.getFirstName(),
                 user.getLastName(),
-                user.getPassword()
+                user.getPassword(),
+                user.getPhone_number()
         );
         model.addAttribute("offers",userService.allUserOffers(username));
         model.addAttribute("user", userProfileView);

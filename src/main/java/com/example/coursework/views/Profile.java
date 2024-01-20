@@ -10,11 +10,14 @@ public class Profile {
 
     private String password;
 
-    public Profile(String username, String firstName, String lastName, String password) {
+    private String phone_number;
+
+    public Profile(String username, String firstName, String lastName, String password, String phone_number) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
+        this.phone_number = phone_number;
     }
 
     public String getUsername() {
@@ -47,5 +50,24 @@ public class Profile {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPhone_number() {
+        return phone_number;
+    }
+
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
+    }
+
+    @Override
+    public String toString() {
+        return "Profile{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", password='" + password + '\'' +
+                ", phone_number='" + phone_number + '\'' +
+                '}';
     }
 }

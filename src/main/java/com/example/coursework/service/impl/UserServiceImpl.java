@@ -74,12 +74,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        Optional<User> users = userRepository.findByUsername(username);
+        Optional<User> users = userRepository.findUserByUsername(username);
         return users.get();
     }
     @Override
     public List<Offer> allUserOffers(String username) {
-        Optional<User> userOptional = userRepository.findByUsername(username);
+        Optional<User> userOptional = userRepository.findUserByUsername(username);
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             return offerRepository.findBySeller(user);

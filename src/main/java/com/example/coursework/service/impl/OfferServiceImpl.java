@@ -15,6 +15,7 @@ import com.example.coursework.repositorie.UserRepository;
 import com.example.coursework.service.OfferService;
 import com.example.coursework.validation.ValidationUtil;
 import com.example.coursework.views.OfferViewModel;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,56 +50,37 @@ public class OfferServiceImpl implements OfferService {
         this.userRepository = userRepository;
     }
 
-//    @Override
-//    @Transactional
-//    @CacheEvict(value = "offerCache", allEntries = true)
-//    public OfferDTO createOffer(OfferDTO offerDTO) {
-//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//
-//        String username = authentication.getName();
-//        User user = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
-//
-//
-//        BrandDTO brandDTO = offerDTO.getModel().getBrand();
-//        Brand brand;
-//        List<Brand> existingBrands = brandRepository.findByName(brandDTO.getName());
-//        //map DTO
-//        if (!existingBrands.isEmpty()) {
-//            brand = existingBrands.get(0);
-//        } else {
-//            brand = brandRepository.save(modelMapper.map(brandDTO, Brand.class));
-//        }
-//
-//        ModelDTO modelDTO = offerDTO.getModel();
-//        String modelName = modelDTO.getName();
-//
-//        List<Model> existingModels = modelRepository.findByBrandNameAndModelName(brandDTO.getName(), modelName);
-//        Model model;
-//        if (existingModels.isEmpty()) {
-//            model = modelMapper.map(modelDTO, Model.class);
-//            model.setBrand(brand);
-//            model = modelRepository.save(model);
-//        } else {
-//            model = existingModels.get(0);
-//        }
-//
-//        Offer offer = modelMapper.map(offerDTO, Offer.class);
-//        offer.setModel(model);
-//
-//
-//        offer.setSeller(user);
-//
-//        Offer savedOffer = offerRepository.save(offer);
-//
-//        return modelMapper.map(savedOffer, OfferDTO.class);
-//    }
-
-
     @Override
+    @CacheEvict(value = "offerCache", allEntries = true)
     public OfferDTO createOffer(OfferDTO offerDTO) {
-         Offer offer = modelMapper.map(offerDTO, Offer.class);
-        return modelMapper.map(offerRepository.save(offer),OfferDTO.class);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        User user = userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
+
+        BrandDTO brandDTO = offerDTO.getModel().getBrand();
+        List<Brand> existingBrands = brandRepository.findByName(brandDTO.getName());
+        Brand brand;
+        if (existingBrands.isEmpty()) {
+            throw new EntityNotFoundException("Brand with name " + brandDTO.getName() + " not found!");
+        } else {
+            brand = existingBrands.get(0);
+        }
+        ModelDTO modelDTO = offerDTO.getModel();
+        String modelName = modelDTO.getName();
+
+        List<Model> existingModels = modelRepository.findByBrandNameAndModelName(brandDTO.getName(), modelName);
+        Model model;
+        if (existingModels.isEmpty()) {
+            throw new EntityNotFoundException("Model with name " + modelName + " not found for brand " + brandDTO.getName());
+        } else {
+            model = existingModels.get(0);
+        }
+        Offer offer = modelMapper.map(offerDTO, Offer.class);
+        offer.setModel(model);
+        offer.setSeller(user);
+        Offer savedOffer = offerRepository.save(offer);
+        return modelMapper.map(savedOffer, OfferDTO.class);
     }
 
     @Override
