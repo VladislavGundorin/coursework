@@ -12,17 +12,17 @@ public interface ModelService {
 
     List<ModelDTO> getAllModels();
 
-//    List<ModelDTO> getModelsByBrandName(String brandName);
-
-
     ModelDTO getModelById(UUID id);
 
     List<ModelDTO> getModelsByBrandName(String brandName);
+
+    List<ModelDTO> getModelsByBrandAndName(String brandName, String modelName);
 
 //    ModelDTO updateModelById(UUID id, ModelDTO modelDTO);
 
 //    List<String> getModelsByBrandAndStartYear(String brandName,int yearstart);
 
+//    List<ModelDTO> getModelsByBrandName(String brandName);
 
-    List<ModelDTO> getModelsByBrandAndName(String brandName, String modelName);
+
 }

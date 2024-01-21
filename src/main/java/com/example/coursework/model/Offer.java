@@ -30,6 +30,10 @@ public class Offer extends BaseEntity implements ImageUrlProvider{
     @Column(name = "transmission")
     private Transmission transmission;
 
+    private LocalDateTime created;
+
+    private LocalDateTime modified;
+
     @Column(name = "year")
     private int year;
 
@@ -46,7 +50,7 @@ public class Offer extends BaseEntity implements ImageUrlProvider{
 
     }
 
-    public Offer(String description, Engine engine, String imageUrl, Integer mileage, int price, Transmission transmission, int year,User seller, Model model, int viewCount) {
+    public Offer(String description, Engine engine, String imageUrl, Integer mileage, int price, Transmission transmission, int year,User seller, Model model, int viewCount, LocalDateTime created, LocalDateTime modified) {
         this.description = description;
         this.engine = engine;
         this.imageUrl = imageUrl;
@@ -56,6 +60,8 @@ public class Offer extends BaseEntity implements ImageUrlProvider{
         this.year = year;
         this.seller = seller;
         this.model = model;
+        this.created = created;
+        this.modified = modified;
         this.viewCount = viewCount;
     }
 

@@ -22,7 +22,5 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     List<User> findByFirstNameAndLastName(String firstName, String lastName);
 
-    boolean existsByUsername(String username);
-
 }
 

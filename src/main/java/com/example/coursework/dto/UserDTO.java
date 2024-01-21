@@ -8,7 +8,6 @@ import java.util.UUID;
 public class UserDTO {
     private UUID id;
     private String username;
-//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$", message = "Пароль должен содержать не менее 8 символов и содержать по крайней мере одну строчную букву, одну заглавную букву и одну цифру.")
     private String password;
     private String firstName;
     private String lastName;

@@ -1,6 +1,8 @@
 package com.example.coursework.dto;
 
 import com.example.coursework.enums.Category;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 import java.util.UUID;
 
@@ -8,7 +10,6 @@ public class ModelDTO {
     private UUID id;
     private String name;
     private Category category;
-
     private int startYear;
     private int endYear;
     private String imageUrl;
@@ -26,7 +27,6 @@ public class ModelDTO {
 
     }
     public ModelDTO(){
-
     }
 
     public UUID getId() {
@@ -52,7 +52,8 @@ public class ModelDTO {
     public void setCategory(Category category) {
         this.category = category;
     }
-
+    @Min(1886)
+    @Max(2023)
     public int getStartYear() {
         return startYear;
     }
@@ -60,7 +61,8 @@ public class ModelDTO {
     public void setStartYear(int startYear) {
         this.startYear = startYear;
     }
-
+    @Min(1886)
+    @Max(2023)
     public int getEndYear() {
         return endYear;
     }

@@ -7,6 +7,7 @@ import com.example.coursework.service.ModelService;
 import com.example.coursework.validation.ValidationUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +18,6 @@ import java.util.stream.Collectors;
 
 @Service
 @EnableCaching
-
 public class ModelServiceImpl implements ModelService {
     private final ModelMapper modelMapper;
     private final ModelRepository modelRepository;
@@ -41,6 +41,7 @@ public class ModelServiceImpl implements ModelService {
         modelRepository.deleteById(modelId);
     }
 
+    @Cacheable(value = "Allmodels")
     @Override
     public List<ModelDTO> getAllModels() {
         List<Model> models = modelRepository.findAll();

@@ -1,11 +1,13 @@
 package com.example.coursework.views;
 
+import com.example.coursework.validation.validUser.UniqueUsername;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
 public class UserRegistrationViewModel {
     @NotEmpty(message = "User name cannot be null or empty!")
     @Size(min = 5, max = 20)
+    @UniqueUsername
     private String username;
 
 

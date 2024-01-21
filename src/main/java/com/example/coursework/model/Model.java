@@ -4,6 +4,7 @@ import com.example.coursework.enums.Category;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -24,6 +25,10 @@ public class Model extends BaseEntity implements ImageUrlProvider{
 
     @Column(name = "end_year")
     private int endYear;
+
+    private LocalDateTime created;
+
+    private LocalDateTime modified;
 
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @OneToMany(mappedBy = "model")

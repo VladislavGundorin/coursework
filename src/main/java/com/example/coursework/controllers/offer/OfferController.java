@@ -48,14 +48,10 @@ public class OfferController {
         LOG.log(Level.INFO, "Entering method: offerDetails for offer " + offerId);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-
         OfferDTO offerDTO = offerService.getOfferById(offerId);
-
         offerService.incrementViewCount(offerId);
-
         stopWatch.stop();
         System.out.println("offerDetails execution time: " + stopWatch.getTotalTimeMillis() + " ms");
-
         model.addAttribute("offerDetails", offerDTO);
         return "offers-details";
     }
@@ -66,13 +62,6 @@ public class OfferController {
         offerService.deleteOfferById(id);
     }
 
-//    @GetMapping("/descriptions")
-//    public List<String> getDescriptionsByBrandAndModel(
-//            @RequestParam(name = "brandname") String brandName,
-//            @RequestParam(name = "modelname") String modelName) {
-//        LOG.log(Level.INFO, "Entering method: getDescriptionsByBrandAndModel");
-//        return offerService.getDescriptionsByBrandAndModel(brandName, modelName);
-//    }
     @GetMapping("/offer-view")
     public String getOfferView(Model model) {
         LOG.log(Level.INFO, "Entering method: getOfferView");
@@ -86,12 +75,9 @@ public class OfferController {
         LOG.log(Level.INFO, "Entering method: deleteOffer for offer " + id);
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-
         offerService.deleteOfferById(id);
-
         stopWatch.stop();
         System.out.println("deleteOfferById execution time: " + stopWatch.getTotalTimeMillis() + " ms");
-
         return "redirect:/offers/alloffers";
     }
     @GetMapping("/create")
@@ -109,9 +95,7 @@ public class OfferController {
         LOG.log(Level.INFO, "Entering method: createOffer");
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
-
         offerService.createOffer(offerDTO);
-
         stopWatch.stop();
         System.out.println("createOffer execution time: " + stopWatch.getTotalTimeMillis() + " ms");
 

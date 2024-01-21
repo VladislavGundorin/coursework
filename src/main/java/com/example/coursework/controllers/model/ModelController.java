@@ -42,11 +42,6 @@ public class ModelController {
         return "models-details";
     }
 
-//    @GetMapping("/brand-startYear")
-//    public List<String> getModelsByBrandAndStartYear(@RequestParam String brandname,@RequestParam int yearstart){
-//        LOG.log(Level.INFO, "Entering method: getModelsByBrandAndStartYear");
-//        return modelService.getModelsByBrandAndStartYear(brandname, yearstart);
-//    }
     @DeleteMapping("/delete/id")
     public void deleteModelById(@PathVariable UUID id){
         LOG.log(Level.INFO, "Entering method: deleteModelById for model " + id);

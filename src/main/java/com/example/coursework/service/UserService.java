@@ -26,15 +26,13 @@ public interface UserService {
 
     List<Offer> allUserOffers(String username);
 
+    void updateUserProfile(Profile updatedProfile);
+
 //    boolean isUserAdmin(String username);
 
 //    UserDTO updateUser(UUID id, UserDTO userDTO);
 
 
     List<User> getByFirstNameAndLastName(String firstName, String lastName);
-
-    void updateUserProfile(Profile updatedProfile);
-
-
 
 }

@@ -18,11 +18,7 @@ public interface OfferRepository extends JpaRepository<Offer, UUID> {
             "WHERE b.name = :brandName AND m.name = :modelName")
     List<String> findDescriptionsByBrandAndModel(@Param("brandName") String brandName, @Param("modelName") String modelName);
 
-
     List<Offer> findAllByOrderByViewCountDesc();
-//
-//    @Query("SELECT o.description, o.viewCount,u.username AS sellerUsername, b.name AS brandName FROM Offer o JOIN o.seller u JOIN o.model m JOIN m.brand b WHERE LOWER(o.description) LIKE LOWER(CONCAT('%', :keyword, '%'))")
-//    List<String> findOffersWithKeyword(@Param("keyword") String keyword);
 
     List<Offer> findAll();
 

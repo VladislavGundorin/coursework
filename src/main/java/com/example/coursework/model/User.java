@@ -3,6 +3,7 @@ package com.example.coursework.model;
 import jakarta.persistence.*;
 import org.hibernate.annotations.Cascade;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -15,6 +16,8 @@ public class User extends BaseEntity {
     private boolean isActive;
     private String imageUrl;
     private String phone_number;
+    private LocalDateTime created;
+    private LocalDateTime modified;
 
 
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
@@ -28,7 +31,7 @@ public class User extends BaseEntity {
     public User() {
     }
 
-    public User(String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, String phone_number, UserRole role) {
+    public User(String username, String password, String firstName, String lastName, boolean isActive, String imageUrl, String phone_number, UserRole role, LocalDateTime modified, LocalDateTime created) {
         this.username = username;
         this.password = password;
         this.firstName = firstName;
@@ -37,6 +40,8 @@ public class User extends BaseEntity {
         this.imageUrl = imageUrl;
         this.phone_number = phone_number;
         this.role = role;
+        this.created = created;
+        this.modified = modified;
     }
 
     public String getUsername() {

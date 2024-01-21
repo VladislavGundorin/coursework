@@ -34,9 +34,6 @@ public class BrandController {
         LOG.log(Level.INFO, "Entering method: getAllBrands");
         List<BrandDTO> brandDTOs = brandService.getAllBrands();
         model.addAttribute("brands", brandDTOs);
-//        String username = principal.getName();
-//        boolean isAdmin = userService.isUserAdmin(username);
-//        model.addAttribute("isAdmin", isAdmin);
         return "brands-all";
     }
 

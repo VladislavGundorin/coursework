@@ -4,14 +4,12 @@ import com.example.coursework.dto.UserDTO;
 import com.example.coursework.enums.Role;
 import com.example.coursework.model.Offer;
 import com.example.coursework.model.User;
-import com.example.coursework.model.UserRole;
 import com.example.coursework.repositorie.OfferRepository;
 import com.example.coursework.repositorie.UserRepository;
 import com.example.coursework.repositorie.UserRoleRepository;
 import com.example.coursework.service.UserRoleService;
 import com.example.coursework.service.UserService;
 import com.example.coursework.validation.ValidationUtil;
-import com.example.coursework.views.OfferViewModel;
 import com.example.coursework.views.Profile;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
@@ -22,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-import java.beans.Transient;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +34,6 @@ public class UserServiceImpl implements UserService {
     private final ValidationUtil validationUtil;
     private final UserRoleRepository userRoleRepository;
     private final UserRoleService userRoleService;
-    //    private final PasswordEncoder passwordEncoder;
     private final OfferRepository offerRepository;
 
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -50,7 +45,6 @@ public class UserServiceImpl implements UserService {
         this.validationUtil = validationUtil;
         this.userRoleRepository = userRoleRepository;
         this.userRoleService = userRoleService;
-//        this.passwordEncoder = passwordEncoder;
         this.offerRepository = offerRepository;
     }
 
@@ -83,11 +77,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUsersByRole(role);
     }
 
-    //    @Override
-//    public User getUserByUsername(String username) {
-//        Optional<User> users = userRepository.findUserByUsername(username);
-//        return users.get();
-//    }
     @Override
     public User getUserByUsername(String username) {
         return userRepository.findUserByUsername(username)

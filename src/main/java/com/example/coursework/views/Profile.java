@@ -19,6 +19,9 @@ public class Profile {
         this.password = password;
         this.phone_number = phone_number;
     }
+    public Profile(){
+
+    }
 
     public String getUsername() {
         return username;

@@ -12,6 +12,10 @@ public class Brand extends BaseEntity {
     @Column(name="name")
     private String name;
 
+    private LocalDateTime created;
+
+    private LocalDateTime modified;
+
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @OneToMany(mappedBy = "brand",fetch = FetchType.LAZY)
     List<Model> models;

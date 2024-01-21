@@ -9,7 +9,6 @@ import com.example.coursework.model.*;
 import com.example.coursework.repositorie.*;
 import com.example.coursework.service.*;
 import com.example.coursework.service.impl.AuthService;
-import com.example.coursework.views.UserRegistrationViewModel;
 import com.github.javafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -81,14 +80,6 @@ public class DataInitializer implements CommandLineRunner {
         admin.setRole(userRoleRepository.findById(adminDTO.getRole().getId()).orElseThrow());
 
         userRepository.save(admin);
-
-//        UserRegistrationViewModel adminUser = new UserRegistrationViewModel();
-//        adminUser.setUsername("admin");
-//        adminUser.setPassword("admin");
-//        adminUser.setFirstName("Admin");
-//        adminUser.setLastName("User");
-//
-//        authService.registerUser(adminUser);
 
         for (int i = 0; i < 100; i++) {
             UserDTO userDTO = new UserDTO();
