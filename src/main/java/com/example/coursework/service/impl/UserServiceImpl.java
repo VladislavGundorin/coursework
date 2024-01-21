@@ -12,16 +12,24 @@ import com.example.coursework.service.UserRoleService;
 import com.example.coursework.service.UserService;
 import com.example.coursework.validation.ValidationUtil;
 import com.example.coursework.views.OfferViewModel;
+import com.example.coursework.views.Profile;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+import java.beans.Transient;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -30,8 +38,10 @@ public class UserServiceImpl implements UserService {
     private final ValidationUtil validationUtil;
     private final UserRoleRepository userRoleRepository;
     private final UserRoleService userRoleService;
-//    private final PasswordEncoder passwordEncoder;
+    //    private final PasswordEncoder passwordEncoder;
     private final OfferRepository offerRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, ModelMapper modelMapper, ValidationUtil validationUtil, UserRoleRepository userRoleRepository, UserRoleService userRoleService, OfferRepository offerRepository) {
@@ -58,9 +68,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> modelMapper.map(user,UserDTO.class))
+        return users.stream().map(user -> modelMapper.map(user, UserDTO.class))
                 .collect(Collectors.toList());
     }
+
     @Override
     public Optional<UserDTO> getUserById(UUID id) {
         Optional<User> optionalUser = userRepository.findById(id);
@@ -72,11 +83,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.findUsersByRole(role);
     }
 
+    //    @Override
+//    public User getUserByUsername(String username) {
+//        Optional<User> users = userRepository.findUserByUsername(username);
+//        return users.get();
+//    }
     @Override
     public User getUserByUsername(String username) {
-        Optional<User> users = userRepository.findUserByUsername(username);
-        return users.get();
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь с именем " + username + " не найден"));
     }
+
     @Override
     public List<Offer> allUserOffers(String username) {
         Optional<User> userOptional = userRepository.findUserByUsername(username);
@@ -86,16 +103,24 @@ public class UserServiceImpl implements UserService {
         }
         return Collections.emptyList();
     }
+
     @Override
     public List<User> getByFirstNameAndLastName(String firstName, String lastName) {
         return userRepository.findByFirstNameAndLastName(firstName, lastName);
     }
-//    @Override
-//    public boolean isUserAdmin(String username) {
-//        User user = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
-//        return user.getRole().getRole() == Role.ADMIN;
-//    }
+    @Transactional
+    @Override
+    public void updateUserProfile(Profile updatedProfile) {
+        Optional<User> optionalUser = userRepository.findUserByUsername(updatedProfile.getUsername());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setFirstName(updatedProfile.getFirstName());
+            user.setLastName(updatedProfile.getLastName());
+            user.setPhone_number(updatedProfile.getPhone_number());
+            userRepository.save(user);
+        }
+    }
 }
+
 
 

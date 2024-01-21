@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Пользователи</title>
+    <title>Профиль</title>
 </head>
 <body class="d-flex flex-column h-100">
 <div th:replace="~{fragments/head}">Navbar</div>
@@ -16,17 +16,29 @@
                 </div>
                 <div class="row bg-light rounded">
                     <div class="col-md-6">
-                        <h2>Пользователь</h2>
-                        <h4 th:text="'Логин: ' + ${user.getUsername}"></h4>
-                        <h4 th:text="'Имя: ' + ${user.getFirstName}"></h4>
-                        <h4 th:text="'Фамилия: ' + ${user.getLastName}"></h4>
-                        <h4 th:text="'Номер телефона: ' + ${user.getPhone_number}"></h4>
+
+                        <form th:action="@{/users/profile/update}" th:object="${user}" method="post">
+                            <div class="form-group">
+                                <label for="firstName">Имя:</label>
+                                <input type="text" class="form-control" id="firstName" th:field="*{firstName}">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Фамилия:</label>
+                                <input type="text" class="form-control" id="lastName" th:field="*{lastName}">
+                            </div>
+                            <div class="form-group">
+                                <label for="phone_number">Номер телефона:</label>
+                                <input type="text" class="form-control" id="phone_number" th:field="*{phone_number}">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Сохранить</button>
+                        </form>
+
                     </div>
                 </div>
             </main>
         </div>
     </div>
-    <h2>Ваши заказы</h2>
+    <h2>Ваши объявления</h2>
     <div>
         <table class="table">
             <thead>

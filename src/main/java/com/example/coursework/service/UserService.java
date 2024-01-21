@@ -4,6 +4,7 @@ import com.example.coursework.dto.UserDTO;
 import com.example.coursework.enums.Role;
 import com.example.coursework.model.Offer;
 import com.example.coursework.model.User;
+import com.example.coursework.views.Profile;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public interface UserService {
 
 
     List<User> getByFirstNameAndLastName(String firstName, String lastName);
+
+    void updateUserProfile(Profile updatedProfile);
 
 
 

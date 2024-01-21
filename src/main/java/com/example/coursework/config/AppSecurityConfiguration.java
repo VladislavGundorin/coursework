@@ -34,7 +34,7 @@ public class AppSecurityConfiguration {
                                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                                         requestMatchers("/","/users/login","/users/register","/offers/alloffers","/offers/details/**","/offers/top").permitAll().
                                         requestMatchers("/users/profile").authenticated().
-                                        requestMatchers("/", "/users/login","/offers/alloffers","/offers/create","/users/profile","/offers/details","/offers/top").hasRole(Role.USER.name()).
+                                        requestMatchers("/", "/users/login","/offers/alloffers","/offers/create","/users/profile","/offers/details","/offers/top","/users/profile/update").hasRole(Role.USER.name()).
                                         requestMatchers("/**").hasRole(Role.ADMIN.name()).
                                         anyRequest().authenticated()
                 )

@@ -176,5 +176,6 @@ public class DataInitializer implements CommandLineRunner {
 
             offerRepository.save(offer);
         }
+
     }
 }

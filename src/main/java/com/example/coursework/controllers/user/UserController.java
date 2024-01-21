@@ -133,5 +133,24 @@ public class UserController {
 
         return "profile";
     }
+    @PostMapping("/profile/update")
+    public String updateProfile(@ModelAttribute("user") Profile updatedProfile, Principal principal, Model model) {
+        String username = principal.getName();
+        User user = userService.getUserByUsername(username);
+        user.setFirstName(updatedProfile.getFirstName());
+        user.setLastName(updatedProfile.getLastName());
+        user.setPhone_number(updatedProfile.getPhone_number());
+        userService.updateUserProfile(updatedProfile);
+        Profile userProfileView = new Profile(
+                username,
+                user.getFirstName(),
+                user.getLastName(),
+                user.getPassword(),
+                user.getPhone_number()
+        );
+        model.addAttribute("offers", userService.allUserOffers(username));
+        model.addAttribute("user", userProfileView);
 
+        return "redirect:/users/profile";
+    }
 }
