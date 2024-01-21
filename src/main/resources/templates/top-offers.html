@@ -8,14 +8,9 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <h2 class="text-center text-dark mt-5">Список всех предложений</h2>
+                <h2 class="text-center text-dark mt-5">Топ 5 предложений</h2>
                 <div class="row mb-3">
-                    <div class="col-md-12 mb-3">
-                        <a th:href="@{/offers/top}" class="btn btn-primary">Топ 5 предложений</a>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div th:each="offer, iterStat : ${offers}" class="col-md-4 mb-3">
+                    <div th:each="offer, iterStat : ${topOffers}" class="col-md-4 mb-3">
                         <div class="card h-100">
                             <img th:src="${offer.imageUrl}" alt="Offer Image" class="card-img-top img-fluid img-thumbnail">
                             <div class="card-body">

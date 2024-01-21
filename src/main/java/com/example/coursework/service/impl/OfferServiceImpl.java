@@ -25,10 +25,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -142,6 +139,19 @@ public class OfferServiceImpl implements OfferService {
             offerViewModels.add(viewModel);
         }
         return offerViewModels;
+    }
+    @Override
+    public List<OfferDTO> getTopOffers(List<OfferDTO> allOffers) {
+        Comparator<OfferDTO> comparator = Comparator
+                .comparing(OfferDTO::getYear, Comparator.reverseOrder())
+                .thenComparing(OfferDTO::getMileage);
+
+        List<OfferDTO> topOffers = allOffers.stream()
+                .sorted(comparator)
+                .limit(5)
+                .collect(Collectors.toList());
+
+        return topOffers;
     }
 
 }

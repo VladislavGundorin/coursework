@@ -62,4 +62,11 @@ public class ModelServiceImpl implements ModelService {
         return models.stream().map(model -> modelMapper.map(model,ModelDTO.class))
                 .collect(Collectors.toList());
     }
+    @Override
+    public List<ModelDTO> getModelsByBrandName(String brandName) {
+        List<Model> models = modelRepository.findByName(brandName);
+        return models.stream()
+                .map(model -> modelMapper.map(model, ModelDTO.class))
+                .collect(Collectors.toList());
+    }
 }

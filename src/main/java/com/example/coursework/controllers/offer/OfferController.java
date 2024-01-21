@@ -42,6 +42,7 @@ public class OfferController {
         return "offers-all";
     }
 
+
     @GetMapping("/details/{offer-id}")
     public String offerDetails(@PathVariable("offer-id") UUID offerId, Model model) {
         LOG.log(Level.INFO, "Entering method: offerDetails for offer " + offerId);
@@ -115,6 +116,12 @@ public class OfferController {
         System.out.println("createOffer execution time: " + stopWatch.getTotalTimeMillis() + " ms");
 
         return "redirect:/offers/create";
+    }
+    @GetMapping("/top")
+    public String getTopOffers(Model model) {
+        List<OfferDTO> topOffers = offerService.getTopOffers(offerService.getAllOffers());
+        model.addAttribute("topOffers", topOffers);
+        return "top-offers";
     }
 
 }

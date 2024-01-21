@@ -24,7 +24,7 @@ public interface OfferService {
 
     List<OfferViewModel> getOfferDataForUserView();
 
-
+    List<OfferDTO> getTopOffers(List<OfferDTO> allOffers);
 
 //    OfferDTO updateOfferByID(UUID id,OfferDTO offerDTO);
 

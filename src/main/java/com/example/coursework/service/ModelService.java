@@ -17,6 +17,8 @@ public interface ModelService {
 
     ModelDTO getModelById(UUID id);
 
+    List<ModelDTO> getModelsByBrandName(String brandName);
+
 //    ModelDTO updateModelById(UUID id, ModelDTO modelDTO);
 
 //    List<String> getModelsByBrandAndStartYear(String brandName,int yearstart);
